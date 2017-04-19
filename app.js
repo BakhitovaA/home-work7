@@ -17,13 +17,12 @@ app.get('/hello' , function (req, res) {
 
 //GET /hello/[любое имя] – Страница, код ответа 200 OK и покажет текст "Hello, [любое имя]!"
 app.get('/hello/:name', function (req, res) {
-	res.status(200).send('Hello, '+req.params.name+'!');
+	res.status(200).send('Hello, '+ req.params.name + '!');
 })
 
 //ANY /sub/[что угодно]/[возможно даже так] – Любая из этих страниц должна показать текст "You requested URI: [полный URI запроса]"
 app.all('/sub/*', function (req, res) {
-	let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-	res.status(200).send('You requested URI: ' + fullUrl);
+	res.status(200).send('You requested URI: ' + req.protocol + '://' + req.get('host') + req.originalUrl);
 })
 
 //Добавить в роут POST /post проверку на наличие Header: Key (на уровне middleware), если такого header не существует, то возвращать 401
@@ -34,7 +33,6 @@ const middleware = function (req, res, next) {
 		next();
 	}
 }
-
 
 //POST /post – Страница которая вернет все тело POST запроса (POST body) в JSON формате, либо 404 Not Found - если нет тела запроса
 app.get('/post', middleware, function (req, res) {
