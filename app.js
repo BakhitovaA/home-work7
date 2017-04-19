@@ -5,28 +5,28 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({"extended": true}));
 
-//GET / – Главная страница которая вернет код 200 OK и покажет текст "Hello, Express.js"
+//GET / вЂ“ Р“Р»Р°РІРЅР°СЏ СЃС‚СЂР°РЅРёС†Р° РєРѕС‚РѕСЂР°СЏ РІРµСЂРЅРµС‚ РєРѕРґ 200 OK Рё РїРѕРєР°Р¶РµС‚ С‚РµРєСЃС‚ "Hello, Express.js"
 app.get('/' , function (req, res) {
 	res.status(200).send('Hello, Express.js');
 });
 
-//GET /hello – Страница, код ответа 200 OK и покажет текст "Hello stranger!"
+//GET /hello вЂ“ РЎС‚СЂР°РЅРёС†Р°, РєРѕРґ РѕС‚РІРµС‚Р° 200 OK Рё РїРѕРєР°Р¶РµС‚ С‚РµРєСЃС‚ "Hello stranger!"
 app.get('/hello' , function (req, res) {
 	res.status(200).send('Hello stranger!');
 });
 
-//GET /hello/[любое имя] – Страница, код ответа 200 OK и покажет текст "Hello, [любое имя]!"
+//GET /hello/[Р»СЋР±РѕРµ РёРјСЏ] вЂ“ РЎС‚СЂР°РЅРёС†Р°, РєРѕРґ РѕС‚РІРµС‚Р° 200 OK Рё РїРѕРєР°Р¶РµС‚ С‚РµРєСЃС‚ "Hello, [Р»СЋР±РѕРµ РёРјСЏ]!"
 app.get('/hello/:name', function (req, res) {
 	res.status(200).send('Hello, '+req.params.name+'!');
 })
 
-//ANY /sub/[что угодно]/[возможно даже так] – Любая из этих страниц должна показать текст "You requested URI: [полный URI запроса]"
+//ANY /sub/[С‡С‚Рѕ СѓРіРѕРґРЅРѕ]/[РІРѕР·РјРѕР¶РЅРѕ РґР°Р¶Рµ С‚Р°Рє] вЂ“ Р›СЋР±Р°СЏ РёР· СЌС‚РёС… СЃС‚СЂР°РЅРёС† РґРѕР»Р¶РЅР° РїРѕРєР°Р·Р°С‚СЊ С‚РµРєСЃС‚ "You requested URI: [РїРѕР»РЅС‹Р№ URI Р·Р°РїСЂРѕСЃР°]"
 app.all('/sub/*', function (req, res) {
 	let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
 	res.status(200).send('You requested URI: ' + fullUrl);
 })
 
-//Добавить в роут POST /post проверку на наличие Header: Key (на уровне middleware), если такого header не существует, то возвращать 401
+//Р”РѕР±Р°РІРёС‚СЊ РІ СЂРѕСѓС‚ POST /post РїСЂРѕРІРµСЂРєСѓ РЅР° РЅР°Р»РёС‡РёРµ Header: Key (РЅР° СѓСЂРѕРІРЅРµ middleware), РµСЃР»Рё С‚Р°РєРѕРіРѕ header РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚, С‚Рѕ РІРѕР·РІСЂР°С‰Р°С‚СЊ 401
 const middleware = function (req, res, next) {
 	if (!req.headers.key) {
 		res.sendStatus(401);
@@ -36,7 +36,7 @@ const middleware = function (req, res, next) {
 }
 
 
-//POST /post – Страница которая вернет все тело POST запроса (POST body) в JSON формате, либо 404 Not Found - если нет тела запроса
+//POST /post вЂ“ РЎС‚СЂР°РЅРёС†Р° РєРѕС‚РѕСЂР°СЏ РІРµСЂРЅРµС‚ РІСЃРµ С‚РµР»Рѕ POST Р·Р°РїСЂРѕСЃР° (POST body) РІ JSON С„РѕСЂРјР°С‚Рµ, Р»РёР±Рѕ 404 Not Found - РµСЃР»Рё РЅРµС‚ С‚РµР»Р° Р·Р°РїСЂРѕСЃР°
 app.get('/post', middleware, function (req, res) {
 	if (Object.keys(req.body).length !== 0){
 		res.status(200).json(req.body);
