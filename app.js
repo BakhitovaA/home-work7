@@ -22,7 +22,7 @@ app.get('/hello/:name', function (req, res) {
 
 //ANY /sub/[что угодно]/[возможно даже так] – Любая из этих страниц должна показать текст "You requested URI: [полный URI запроса]"
 app.all('/sub/*', function (req, res) {
-	res.status(200).send('You requested URI: ' + req.protocol + '://' + req.get('host') + req.originalUrl);
+	res.status(200).send('You requested URI: ' + req.protocol + '://' + req.get('host') + req.url);
 })
 
 //Добавить в роут POST /post проверку на наличие Header: Key (на уровне middleware), если такого header не существует, то возвращать 401
