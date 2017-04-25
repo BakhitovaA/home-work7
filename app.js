@@ -43,4 +43,6 @@ app.get('/post', middleware, function (req, res) {
 	}
 })
 
-app.listen(3000);
+app.listen(3000, function () {
+	console.log('Подключение к порту 3000');
+});
